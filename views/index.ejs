@@ -1,0 +1,99 @@
+<html ng-app="app.todos">
+
+    <head>
+        <title>Node/Angular Todos</title>
+
+        <!-- Load CDN style -->
+        <link rel ="stylesheet" href="//stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"/>
+        <link rel ="stylesheet" href="//stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"/>
+        <!-- <link rel ="stylesheet" href='https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css'>
+        <link rel ="stylesheet" href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css'> -->
+
+        <link rel ="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.1/css/xeditable.min.css"/>
+
+        <!-- Load app style -->
+        <link rel ="stylesheet" href="/assets/css/style.css"/>
+
+        <!-- Load CDN script -->
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.7.9/angular.min.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/angular-xeditable/0.10.1/js/xeditable.min.js"></script>
+
+        <!-- Load Angular src -->
+        <script src="/assets/js/main/app.js"></script>
+        <script src="/assets/js/main/services/svTodos.js"></script>
+
+    </head>
+
+    <body ng-controller="todoController">
+
+        <div class="container">
+            <div class="jumbotron text-center">
+                <h1>{{ appName }} <span class="badge badge-primary">{{todos.length}}</span></h1>
+            </div>
+
+            <div id="todo-list" class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <!-- Lay danh sach todos tron model app.js-->
+                    <div class="checkbox" ng-repeat="todo in todos">
+                        <input type="checkbox" ng-model = "todo.isDone" ng-change="updateTodo(todo)">
+                        <a href><i class="fa fa-remove" ng-click="deleteTodo(todo)"></i></a>
+                        <a href><i class="fa fa-edit" ng-click="textBtnForm.$show()" ng-hide="textBtnForm.$visible"></i></a>
+                        <span ng-class="{strike:todo.isDone}" editable-text="todo.text" e-form="textBtnForm" onaftersave="updateTodo(todo)">{{todo.text}}</span>
+                    </div>
+                    <p class="text-center" ng-show=loading>
+                        <span class="fa fa-spinner fa-spin fa-2x"></span>
+                    </p>
+                </div>
+            </div>
+
+            <div id="todo-form" class="row">
+                <div class="col-sm-8 col-sm-offset-2 text-center">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" ng-model="formData.text" class="form-control input-lg text-center" placeholder="What do you want to do?">
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-lg" ng-disabled="!formData.text" ng-click="createTodo()">Add</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- <div class="page-content page-container" id="page-content">
+                <div class="padding">
+                    <div class="row container d-flex justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="card px-3">
+                                <div class="card-body">
+                                    <h4 class="card-title">Todo list databoard</h4>
+                                    <div class="add-items d-flex"> <input type="text" class="form-control todo-list-input" placeholder="What do you need to do today?"> <button class="add btn btn-primary font-weight-bold todo-list-add-btn">Add</button> </div>
+                                    <div class="list-wrapper">
+                                        <ul class="d-flex flex-column-reverse todo-list">
+                                            <li>
+                                                <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> For what reason would it be advisable. <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                            </li>
+                                            <li class="completed">
+                                                <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox" checked=""> For what reason would it be advisable for me to think. <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                            </li>
+                                            <li>
+                                                <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> it be advisable for me to think about business content? <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                            </li>
+                                            <li>
+                                                <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> Print Statements all <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                            </li>
+                                            <li class="completed">
+                                                <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox" checked=""> Call Rampbo <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                            </li>
+                                            <li>
+                                                <div class="form-check"> <label class="form-check-label"> <input class="checkbox" type="checkbox"> Print bills <i class="input-helper"></i></label> </div> <i class="remove mdi mdi-close-circle-outline"></i>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+    </body>
+</html>
