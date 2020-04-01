@@ -3,6 +3,9 @@ var bodyParser = require('body-parser');
 var morgan = require('morgan');
 var mongoose = require('mongoose');
 
+/**
+ * using config folder
+ */
 var config = require('./config');
 
 var setupController = require('./api/controllers/setupController');
@@ -15,18 +18,18 @@ app.use('/assets', express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 // data form, all data post to server
 app.use(bodyParser.urlencoded({ extended: true }));
-
 app.use(morgan('dev'));
 
 app.set('view engine', 'ejs');
 
-// db info
-//console.log(config.getDbConnectionString());
+/**
+ * setup connection
+ */
 mongoose.connect(config.getDbConnectionString());
 setupController(app);
 todoController(app);
 
-app.get('/', function(req, res){
+app.get('/', function(req, res) {
     res.render('index.ejs');
 });
 
